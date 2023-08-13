@@ -102,7 +102,7 @@ def test(tokenizer, model, device, loader, output_path, top_n_patches):
                     filewriter.writerow([predstr])
 
                         
-def executePerturbation(bugId, src_dir, rootdir=" /repair/RewardRepair"):
+def executePerturbation(bugId, src_dir, rootdir=" /repair/RewardRepair/"):
     compile_error_flag = True
     project = bugId.split('_')[0]
     bugNo = bugId.split('_')[1]
@@ -326,7 +326,7 @@ def getFailingTestDiagnostic(failingtest,program_path):
 
     return str(result)
     
-def execute(validation_dir, rootdir=" /repair/RewardRepair"):
+def execute(validation_dir, rootdir=" /repair/RewardRepair/"):
     compile_error_flag = True
 
     program_path= validation_dir
