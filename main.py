@@ -369,7 +369,7 @@ def execute(validation_dir, rootdir="/repair/RewardRepair/"):
                 exectresult='OK'
                 compile_error_flag=False
 
-    # evaluate plausible
+# evaluate plausible
     if not compile_error_flag:
         #get test result
         cmd = "cd " + program_path + ";"
@@ -380,23 +380,7 @@ def execute(validation_dir, rootdir="/repair/RewardRepair/"):
         if 'Failing tests: 0' in str(result):
             exectresult='[Plausible]'
         elif 'Failing tests' in str(result):
-            result=str(result).split('Failing tests:')[1]
-            result=str(result).split('-')
-            for i in range(1,len(result)):
-                failingtest = result[i]
-                if '::' not in failingtest and i+1<len(result):
-                    failingtest = result[i+1]
-                if '\\' in failingtest:
-                    failingtest = failingtest.split('\\')[0]
-                failingtest=failingtest.strip()
-
-                if '::' in failingtest:
-                    failingTestMethod=failingtest.split('::')[1]
-                    faildiag = getFailingTestDiagnostic(failingtest,program_path)
-                    exectresult = '[FE] ' + faildiag +' '+failingTestMethod
-                else:
-                    exectresult = '[FE] '
-                break
+            exectresult = '[FE]'
    
     os.chdir(rootdir)
 
@@ -452,10 +436,11 @@ def validate(bug_id, src_dir, buggy_file, buggy_loc, output_dir="./"):
                 targetFile.write(exeresult+'\t'+str(idx)+'\t'+patch)
             
             if exeresult == "[Plausible]":
-                diff_path = os.path.join(patchFolder, f"{idx}.diff")
+                diff_path = os.path.join(patchFolder, f"plausible.diff")
                 with open(diff_path, "w") as f:
                     f.write('- ' + buggyLines.strip() + "\n")
                     f.write('+ ' + patch.strip())
+                break
         
 def repair(output_path, top_n_patches):
     LEARNING_RATE = 1e-4    # learning rate (default: 0.01)
